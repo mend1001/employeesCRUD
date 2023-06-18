@@ -1,4 +1,4 @@
-package net.javaguides.springbootbakend.DTO;
+package co.com.mend1001.springbootbakend.DTO;
 
 import java.math.BigDecimal;
 

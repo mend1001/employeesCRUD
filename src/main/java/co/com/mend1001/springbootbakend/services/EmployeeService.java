@@ -1,6 +1,6 @@
-package net.javaguides.springbootbakend.services;
+package co.com.mend1001.springbootbakend.services;
 
-import net.javaguides.springbootbakend.model.Employee;
+import co.com.mend1001.springbootbakend.model.Employee;
 
 import java.math.BigDecimal;
 import java.util.List;

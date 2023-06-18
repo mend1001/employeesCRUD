@@ -1,4 +1,4 @@
-package net.javaguides.springbootbakend.model;
+package co.com.mend1001.springbootbakend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

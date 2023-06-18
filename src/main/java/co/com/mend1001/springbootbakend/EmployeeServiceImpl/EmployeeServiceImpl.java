@@ -1,9 +1,9 @@
-package net.javaguides.springbootbakend.EmployeeServiceImpl;
+package co.com.mend1001.springbootbakend.EmployeeServiceImpl;
 
-import net.javaguides.springbootbakend.exception.ResourceNotFoundException;
-import net.javaguides.springbootbakend.model.Employee;
-import net.javaguides.springbootbakend.repository.EmployeeRepository;
-import net.javaguides.springbootbakend.services.EmployeeService;
+import co.com.mend1001.springbootbakend.model.Employee;
+import co.com.mend1001.springbootbakend.repository.EmployeeRepository;
+import co.com.mend1001.springbootbakend.exception.ResourceNotFoundException;
+import co.com.mend1001.springbootbakend.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

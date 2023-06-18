@@ -1,6 +1,6 @@
-package net.javaguides.springbootbakend.repository;
+package co.com.mend1001.springbootbakend.repository;
 
-import net.javaguides.springbootbakend.model.Employee;
+import co.com.mend1001.springbootbakend.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

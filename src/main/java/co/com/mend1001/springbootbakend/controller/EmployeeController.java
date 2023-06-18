@@ -1,11 +1,10 @@
-package net.javaguides.springbootbakend.controller;
+package co.com.mend1001.springbootbakend.controller;
 
 
-import net.javaguides.springbootbakend.DTO.SalarySumResponseDTO;
-import net.javaguides.springbootbakend.exception.ResourceNotFoundException;
-import net.javaguides.springbootbakend.model.Employee;
-import net.javaguides.springbootbakend.repository.EmployeeRepository;
-import net.javaguides.springbootbakend.services.EmployeeService;
+import co.com.mend1001.springbootbakend.DTO.SalarySumResponseDTO;
+import co.com.mend1001.springbootbakend.exception.ResourceNotFoundException;
+import co.com.mend1001.springbootbakend.model.Employee;
+import co.com.mend1001.springbootbakend.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
