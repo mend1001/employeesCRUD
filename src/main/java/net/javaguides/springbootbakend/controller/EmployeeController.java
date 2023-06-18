@@ -1,9 +1,11 @@
 package net.javaguides.springbootbakend.controller;
 
 
+import net.javaguides.springbootbakend.DTO.SalarySumResponseDTO;
 import net.javaguides.springbootbakend.exception.ResourceNotFoundException;
 import net.javaguides.springbootbakend.model.Employee;
 import net.javaguides.springbootbakend.repository.EmployeeRepository;
+import net.javaguides.springbootbakend.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,71 +20,60 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
     @GetMapping
     public List<Employee> getAllEmployees(){
-        return employeeRepository.findAll();
+        return employeeService.getAllEmployees();
     }
 
     @PostMapping
     public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeRepository.save(employee);
+        return employeeService.createEmployee(employee);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable  long id){
-        Employee employee = employeeRepository.findById(id);
-        if (employee == null) {
-            return ResponseEntity.notFound().build();
-        } else {
+        try {
+            Employee employee = employeeService.getEmployeeById(id);
             return ResponseEntity.ok(employee);
+        } catch (ResourceNotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable long id, @RequestBody Employee employeeDetails) {
-        Employee updateEmployee = employeeRepository.findById(id);
-        if (updateEmployee == null) {
+        try {
+            Employee updatedEmployee = employeeService.updateEmployee(id, employeeDetails);
+            return ResponseEntity.ok(updatedEmployee);
+        } catch (ResourceNotFoundException ex) {
             return ResponseEntity.notFound().build();
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
-        // Actualizar solo los campos proporcionados en employeeDetails
-        if (employeeDetails.getFirstName() != null) {
-            updateEmployee.setFirstName(employeeDetails.getFirstName());
-        }
-        if (employeeDetails.getLastName() != null) {
-            updateEmployee.setLastName(employeeDetails.getLastName());
-        }
-        if (employeeDetails.getEmailId() != null) {
-            updateEmployee.setEmailId(employeeDetails.getEmailId());
-        }
-        if (employeeDetails.getSalary() != null) {
-            updateEmployee.setSalary(employeeDetails.getSalary());
-        }
-
-        employeeRepository.save(updateEmployee);
-
-        return ResponseEntity.ok(updateEmployee);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable long id){
-        Employee employee = employeeRepository.findById(id);
-        if (employee == null) {
+    public ResponseEntity<String> deleteEmployee(@PathVariable long id){
+        try {
+            String result = employeeService.deleteEmployee(id);
+            return ResponseEntity.ok(result);
+        } catch (ResourceNotFoundException ex) {
             return ResponseEntity.notFound().build();
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
-        employeeRepository.delete(employee);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/sum-salaries")
-    public ResponseEntity<?> sumSalaries() {
+    public ResponseEntity<SalarySumResponseDTO> sumSalaries() {
         try {
-            BigDecimal sum = employeeRepository.sumSalaries();
-            return ResponseEntity.ok(sum);
+            BigDecimal sum = employeeService.sumSalaries();
+            SalarySumResponseDTO responseDTO = new SalarySumResponseDTO(sum);
+            return ResponseEntity.ok(responseDTO);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -91,7 +82,7 @@ public class EmployeeController {
     @GetMapping("/employee-with-lowest-salary")
     public ResponseEntity<?> findEmployeeWithLowestSalary() {
         try {
-            Employee employee = employeeRepository.findEmployeeWithLowestSalary();
+            Employee employee = employeeService.findEmployeeWithLowestSalary();
 
             if (employee == null) {
                 return ResponseEntity.notFound().build();
@@ -103,8 +94,3 @@ public class EmployeeController {
         }
     }
 }
-
-
-
-
-
